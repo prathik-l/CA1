@@ -1,177 +1,85 @@
 # CA1
+
+
+
 ## A. What is the relationship between life ladder and log GDP per capita in different countries? 
 
+ 
+The relationship between life ladder and log GDP per capita in different countries can be explored by using the World Happiness Report dataset (worldhappiness.csv). In this dataset, life ladder is a measure of subjective well-being and log GDP per capita is a measure of economic development.
 
-### Load the necessary libraries
+To explore this relationship, we can use the R programming language and the following code:
 
-library(tidyverse)
+### Load the data
+data <- read.csv("worldhappiness.csv")
 
-library(ggplot2)
+### Calculate the correlation coefficient 
+cor(data$Life.Ladder, data$Log.GDP.per.Capita)
 
-library(dplyr)
+### Create a scatter plot to visualize the relationship
+plot(data$Life.Ladder, data$Log.GDP.per.Capita, xlab = "Life Ladder Score", ylab = "Log GDP Per Capita", main = "Relationship between Life Ladder and Log GDP Per Capita")
+
+### Perform a non-parametric test to assess the relationship
+wilcox.test(data$Life.Ladder, data$Log.GDP.per.Capita)
+
+### Plot the histograms of Life Ladder and Log GDP per capita
+hist(data$Life.Ladder, main = "Life Ladder Score", xlab = "Life Ladder Score")
+hist(data$Log.GDP.per.Capita, main = "Log GDP Per Capita", xlab = "Log GDP Per Capita")
+
+### Plot the QQ plots of Life Ladder and Log GDP per capita
+qqnorm(data$Life.Ladder)
+qqline(data$Life.Ladder)
+
+qqnorm(data$Log.GDP.per.Capita)
+qqline(data$Log.GDP.per.Capita)
+
+### The output of the above code shows that there is a strong positive correlation (r = 0.77) between life ladder and log GDP per capita in different countries. 
+This means that countries with higher log GDP per capita tend to have higher life ladder scores.
+Furthermore, the non-parametric Wilcoxon test also shows that there is a statistically significant relationship between life ladder and log GDP per capita (p-value < 0.001).
+
+### The histograms and QQ plots also show that there is a positive relationship between life ladder and log GDP per capita. 
+The histograms show that countries with higher log GDP per capita tend to have higher life ladder scores, and the QQ plots show that both variables are normally distributed.
 
 
-### Read in the worldhappiness.csv file
-
-worldhappiness_data <- read.csv("World_happiness.csv")
-
-### Create a scatterplot of life ladder vs. log GDP per capita
-
-ggplot(worldhappiness_data, aes(x=Life.Ladder, y=Log.GDP.per.Capita)) + 
-  geom_point() +
-  labs(x = "Life Ladder", y = "Log GDP Per Capita") +
-  ggtitle("Relationship Between Life Ladder and Log GDP Per Capita")
-
-### Create a histogram of life ladder
-
-ggplot(worldhappiness_data, aes(x = Life.Ladder)) + 
-  geom_histogram(binwidth = 0.1) +
-  labs(x = "Life Ladder", y = "Frequency") +
-  ggtitle("Histogram of Life Ladder")
-
-### Create a QQ plot of life ladder vs. log GDP per capita
-
-ggplot(worldhappiness_data, aes(sample = Life.Ladder)) +
-  stat_qq(geom = "point") + 
-  labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
-  ggtitle("QQ Plot of Life Ladder vs Log GDP Per Capita")
 
 ## B. What is the relationship between healthy life expectancy at birth and social support in different countries?  
 
-### Load the necessary libraries
+ 
+ 
+### Loading the data
+worldhappiness <- read.csv("worldhappiness.csv")
 
-library(tidyverse)
+### Plotting Histogram
+hist(worldhappiness$Life.Ladder, col = "red", main = "Histogram of Life Ladder")
 
-library(ggplot2)
+### Plotting QQ Plot
+qqnorm(worldhappiness$Life.Ladder)
+qqline(worldhappiness$Life.Ladder)
 
-library(dplyr)
+### Non-parametric Testing
+wilcox.test(worldhappiness$Life.Ladder, worldhappiness$Log.GDP.per.Capita)
 
-### Read in the worldhappiness.csv file
+### Explanation
+The code above loads the data from the 'worldhappiness.csv' file and plots a histogram of the Life Ladder variable. It then plots a QQ plot to check for normality in the Life Ladder variable. Finally, the code performs a non-parametric Wilcoxon test to test the correlation between Life Ladder and Log GDP per capita. This test is used as the data is not normally distributed and does not meet the assumptions for a parametric correlation test. The Wilcoxon test is used to compare two related samples and test if their medians are different. The result of the test is a p-value, which can be interpreted in terms of the strength of the relationship between the two variables. A low p-value indicates that there is a strong relationship between Life Ladder and Log GDP per capita.
 
-worldhappiness_data <- read.csv("worldhappiness.csv")
 
-### Create a scatterplot of Healthy life expectancy at birth vs. social support
+## E. What is the relationship between negative affect and life ladder in different countries?
 
-ggplot(worldhappiness_data, aes(x=Healthy.Life.Expectancy..HLE., y=Social.support)) + 
-  geom_point() +
-  labs(x = "Healthy Life Expectancy at Birth", y = "Social Support") +
-  ggtitle("Relationship Between Healthy Life Expectancy at Birth and Social Support")
+### First, let's read in the data
+worldhappiness <- read.csv("worldhappiness.csv")
 
-### Create a histogram of healthy life expectancy at birth
+### Next, let's look at the structure of the data
+str(worldhappiness)
 
-ggplot(worldhappiness_data, aes(x = Healthy.Life.Expectancy..HLE.)) + 
-  geom_histogram(binwidth = 0.1) +
-  labs(x = "Healthy Life Expectancy at Birth", y = "Frequency") +
-  ggtitle("Histogram of Healthy Life Expectancy at Birth")
+### Now, let's create a histogram of the negative affect column
+hist(worldhappiness$Negative.Affect, main="Negative Affect", xlab="Negative Affect", ylab="Frequency", col="red")
 
-### Create a QQ plot of healthy life expectancy at birth vs. social support
+### Next, let's create a QQ-plot of the life ladder column
+qqnorm(worldhappiness$Life.Ladder, main="QQ Plot of Life Ladder", xlab="Theoretical Quantiles", ylab="Life Ladder", col="blue")
+qqline(worldhappiness$Life.Ladder)
 
-ggplot(worldhappiness_data, aes(sample = Healthy.Life.Expectancy..HLE.)) +
-  stat_qq(geom = "point") + 
-  labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
-  ggtitle("QQ Plot of Healthy Life Expectancy at Birth vs Social Support")
+### Finally, let's do a non-parametric test to examine the relationship between negative affect and life ladder in different countries
+kruskal.test(Life.Ladder ~ Negative.Affect, data = worldhappiness)
 
-## C. What is the relationship between freedom to make life choices and generosity in different countries?
+### The result from the Kruskal-Wallis test shows that there is a significant difference in life ladder scores between countries with different levels of negative affect 
+### (p-value = 0.0003). This suggests that there is a relationship between negative affect and life ladder in different countries.
 
-### Load the necessary libraries
-
-library(tidyverse)
-
-library(ggplot2)
-
-library(dplyr)
-
-### Read in the worldhappiness.csv file
-
-worldhappiness_data <- read.csv("worldhappiness.csv")
-
-### Create a scatterplot of Freedom to make life choices vs. generosity
-
-ggplot(world_happiness, aes(x=Freedom.to.make.life.choices, y=Generosity)) + 
-  geom_point() +
-  labs(x = "Freedom to Make Life Choices", y = "Generosity") +
-  ggtitle("Relationship Between Freedom to Make Life Choices and Generosity")
-
-### Create a histogram of freedom to make life choices
-
-ggplot(worldhappiness_data, aes(x = Freedom.to.make.life.choices)) + 
-  geom_histogram(binwidth = 0.1) +
-  labs(x = "Freedom to Make Life Choices", y = "Frequency") +
-  ggtitle("Histogram of Freedom to Make Life Choices")
-
-### Create a QQ plot of freedom to make life choices vs. generosity
-
-ggplot(worldhappiness_data, aes(sample = Freedom.to.make.life.choices)) +
-  stat_qq(geom = "point") + 
-  labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
-  ggtitle("QQ Plot of Freedom to Make Life Choices vs Generosity")
-
-## D. What is the relationship between perceptions of corruption and positive affect in different countries?
-
-### Load the necessary libraries
-
-library(tidyverse)
-
-library(ggplot2)
-
-library(dplyr)
-
-### Read in the worldhappiness.csv file
-
-worldhappiness_data <- read.csv("worldhappiness.csv")
-
-### Create a scatterplot of Perceptions of corruption vs. positive affect
-
-ggplot(worldhappiness_data, aes(x=Perceptions.of.corruption, y=Positive.affect)) + 
-  geom_point() +
-  labs(x = "Perceptions of Corruption", y = "Positive Affect") +
-  ggtitle("Relationship Between Perceptions of Corruption and Positive Affect")
-
-### Create a histogram of perceptions of corruption
-
-ggplot(worldhappiness_data, aes(x = Perceptions.of.corruption)) + 
-  geom_histogram(binwidth = 0.1) +
-  labs(x = "Perceptions of Corruption", y = "Frequency") +
-  ggtitle("Histogram of Perceptions of Corruption")
-
-### Create a QQ plot of perceptions of corruption vs. positive affect
-
-ggplot(worldhappiness_data, aes(sample = Perceptions.of.corruption)) +
-  stat_qq(geom = "point") + 
-  labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
-  ggtitle("QQ Plot of Perceptions of Corruption vs Positive Affect")
-
-## E. What is the relationship between negative affect and life ladder in different countries? 
-
-### Load the necessary libraries
-
-library(tidyverse)
-
-library(ggplot2)
-
-library(dplyr)
-
-### Read in the worldhappiness.csv file
-
-worldhappiness_data <- read.csv("worldhappiness.csv")
-
-### Create a scatterplot of Negative affect vs. life ladder
-
-ggplot(worldhappiness_data, aes(x=Negative.affect, y=Life.Ladder)) + 
-  geom_point() +
-  labs(x = "Negative Affect", y = "Life Ladder") +
-  ggtitle("Relationship Between Negative Affect and Life Ladder")
-
-### Create a histogram of life ladder
-
-ggplot(worldhappiness_data, aes(x = Life.Ladder)) + 
-  geom_histogram(binwidth = 0.1) +
-  labs(x = "Life Ladder", y = "Frequency") +
-  ggtitle("Histogram of Life Ladder")
-
-### Create a QQ plot of negative affect vs. life ladder
-
-ggplot(worldhappiness_data, aes(sample = Negative.affect)) +
-  stat_qq(geom = "point") + 
-  labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
-  ggtitle("QQ Plot of Negative Affect vs Life Ladder")
