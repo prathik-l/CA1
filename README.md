@@ -4,9 +4,11 @@
 
 ### Load the necessary libraries
 library(tidyverse)
+
 library(ggplot2)
+
 library(dplyr)
-library(qqplot)
+
 
 ### Read in the worldhappiness.csv file
 
@@ -38,7 +40,9 @@ ggplot(worldhappiness_data, aes(sample = Life.Ladder)) +
 ### Load the necessary libraries
 
 library(tidyverse)
+
 library(ggplot2)
+
 library(dplyr)
 
 ### Read in the worldhappiness.csv file
