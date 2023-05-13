@@ -3,6 +3,7 @@
 
 
 ### Load the necessary libraries
+
 library(tidyverse)
 
 library(ggplot2)
@@ -75,7 +76,9 @@ ggplot(worldhappiness_data, aes(sample = Healthy.Life.Expectancy..HLE.)) +
 ### Load the necessary libraries
 
 library(tidyverse)
+
 library(ggplot2)
+
 library(dplyr)
 
 ### Read in the worldhappiness.csv file
@@ -108,7 +111,9 @@ ggplot(worldhappiness_data, aes(sample = Freedom.to.make.life.choices)) +
 ### Load the necessary libraries
 
 library(tidyverse)
+
 library(ggplot2)
+
 library(dplyr)
 
 ### Read in the worldhappiness.csv file
@@ -141,7 +146,9 @@ ggplot(worldhappiness_data, aes(sample = Perceptions.of.corruption)) +
 ### Load the necessary libraries
 
 library(tidyverse)
+
 library(ggplot2)
+
 library(dplyr)
 
 ### Read in the worldhappiness.csv file
