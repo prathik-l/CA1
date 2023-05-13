@@ -5,9 +5,9 @@
 ## A. What is the relationship between life ladder and log GDP per capita in different countries? 
 
  
-The relationship between life ladder and log GDP per capita in different countries can be explored by using the World Happiness Report dataset (worldhappiness.csv). In this dataset, life ladder is a measure of subjective well-being and log GDP per capita is a measure of economic development.
+### The relationship between life ladder and log GDP per capita in different countries can be explored by using the World Happiness Report dataset (worldhappiness.csv). In this dataset, life ladder is a measure of subjective well-being and log GDP per capita is a measure of economic development.
 
-To explore this relationship, we can use the R programming language and the following code:
+### To explore this relationship, we can use the R programming language and the following code:
 
 ### Load the data
 data <- read.csv("worldhappiness.csv")
@@ -23,13 +23,16 @@ wilcox.test(data$Life.Ladder, data$Log.GDP.per.Capita)
 
 ### Plot the histograms of Life Ladder and Log GDP per capita
 hist(data$Life.Ladder, main = "Life Ladder Score", xlab = "Life Ladder Score")
+
 hist(data$Log.GDP.per.Capita, main = "Log GDP Per Capita", xlab = "Log GDP Per Capita")
 
 ### Plot the QQ plots of Life Ladder and Log GDP per capita
 qqnorm(data$Life.Ladder)
+
 qqline(data$Life.Ladder)
 
 qqnorm(data$Log.GDP.per.Capita)
+
 qqline(data$Log.GDP.per.Capita)
 
 ### The output of the above code shows that there is a strong positive correlation (r = 0.77) between life ladder and log GDP per capita in different countries. 
@@ -53,6 +56,7 @@ hist(worldhappiness$Life.Ladder, col = "red", main = "Histogram of Life Ladder")
 
 ### Plotting QQ Plot
 qqnorm(worldhappiness$Life.Ladder)
+
 qqline(worldhappiness$Life.Ladder)
 
 ### Non-parametric Testing
@@ -75,6 +79,7 @@ hist(worldhappiness$Negative.Affect, main="Negative Affect", xlab="Negative Affe
 
 ### Next, let's create a QQ-plot of the life ladder column
 qqnorm(worldhappiness$Life.Ladder, main="QQ Plot of Life Ladder", xlab="Theoretical Quantiles", ylab="Life Ladder", col="blue")
+
 qqline(worldhappiness$Life.Ladder)
 
 ### Finally, let's do a non-parametric test to examine the relationship between negative affect and life ladder in different countries
