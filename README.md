@@ -5,7 +5,7 @@
 ## A. What is the relationship between life ladder and log GDP per capita in different countries? 
 
  
-### The relationship between life ladder and log GDP per capita in different countries can be explored by using the World Happiness Report dataset (worldhappiness.csv). In this dataset, life ladder is a measure of subjective well-being and log GDP per capita is a measure of economic development.
+### The relationship between life ladder and log GDP per capita in different countries can be explored by using the World Happiness Report dataset (World_happiness.csv). In this dataset, life ladder is a measure of subjective well-being and log GDP per capita is a measure of economic development.
 
 ### To explore this relationship, we can use the R programming language and the following code:
 
