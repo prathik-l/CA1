@@ -2,89 +2,177 @@
 
 
 
-## A. What is the relationship between life ladder and log GDP per capita in different countries? 
+## A. What is the relationship between life ladder and log GDP per capita in different countries?
 
- 
-### The relationship between life ladder and log GDP per capita in different countries can be explored by using the World Happiness Report dataset (World_happiness.csv). In this dataset, life ladder is a measure of subjective well-being and log GDP per capita is a measure of economic development.
+### Set the working directory
+getwd()
+setwd("C:/Users/User/Documents/Data Science/World_happiness.csv")
 
-### To explore this relationship, we can use the R programming language and the following code:
+### Load the required libraries
+library(ggplot2)
+library(dplyr)
 
 ### Load the data
-data <- read.csv("worldhappiness.csv")
+data <- read.csv("World_happiness.csv", header = TRUE)
 
-### Calculate the correlation coefficient 
-cor(data$Life.Ladder, data$Log.GDP.per.Capita)
+### View the structure of the data
+str(data)
 
-### Create a scatter plot to visualize the relationship
-plot(data$Life.Ladder, data$Log.GDP.per.Capita, xlab = "Life Ladder Score", ylab = "Log GDP Per Capita", main = "Relationship between Life Ladder and Log GDP Per Capita")
+### Create a subset of the dataframe containing only the columns of interest
+data_subset <- subset(data, select = c("Life.Ladder", "Log.GDP.per.capita"))
 
-### Perform a non-parametric test to assess the relationship
-wilcox.test(data$Life.Ladder, data$Log.GDP.per.Capita)
+### Calculate the Pearson correlation coefficient
+cor(data_subset$Life.Ladder, data_subset$Log.GDP.per.capita)
 
-### Plot the histograms of Life Ladder and Log GDP per capita
-hist(data$Life.Ladder, main = "Life Ladder Score", xlab = "Life Ladder Score")
+### Plot a histogram
+ggplot(data_subset, aes(x=Life.Ladder)) + 
+  geom_histogram(bins = 30, fill = "lightblue") 
 
-hist(data$Log.GDP.per.Capita, main = "Log GDP Per Capita", xlab = "Log GDP Per Capita")
+### Plot a QQplot
+ggplot(data_subset, aes(sample = Life.Ladder)) +
+  stat_qq() +
+  stat_qq_line()
 
-### Plot the QQ plots of Life Ladder and Log GDP per capita
-qqnorm(data$Life.Ladder)
+### Perform a non-parametric test
+wilcox.test(data_subset$Life.Ladder, data_subset$Log.GDP.per.capita, paired = TRUE)
 
-qqline(data$Life.Ladder)
+ ## B.  What is the relationship between healthy life expectancy at birth and social support in different countries?  
 
-qqnorm(data$Log.GDP.per.Capita)
+### Loading Libraries
 
-qqline(data$Log.GDP.per.Capita)
+library(ggplot2) # for plotting
 
-### The output of the above code shows that there is a strong positive correlation (r = 0.77) between life ladder and log GDP per capita in different countries. 
-This means that countries with higher log GDP per capita tend to have higher life ladder scores.
-Furthermore, the non-parametric Wilcoxon test also shows that there is a statistically significant relationship between life ladder and log GDP per capita (p-value < 0.001).
+library(dplyr) # for data wrangling
 
-### The histograms and QQ plots also show that there is a positive relationship between life ladder and log GDP per capita. 
-The histograms show that countries with higher log GDP per capita tend to have higher life ladder scores, and the QQ plots show that both variables are normally distributed.
+library(tidyr) # for data wrangling
 
+### Loading the dataset 
+world_happiness <- read.csv("World_happiness.csv")
 
+### Viewing the dataset
+head(world_happiness)
 
-## B. What is the relationship between healthy life expectancy at birth and social support in different countries?  
+### Creating a subset of data
+subset_data <- world_happiness 
+  select(Country.name,Healthy.life.expectancy.at.birth,Social.support)
 
- 
- 
-### Loading the data
-worldhappiness <- read.csv("worldhappiness.csv")
+### Viewing the subset data
+head(world_happiness)
 
-### Plotting Histogram
-hist(worldhappiness$Life.Ladder, col = "red", main = "Histogram of Life Ladder")
+### Descriptive Statistics
+describe(world_happiness)
 
-### Plotting QQ Plot
-qqnorm(worldhappiness$Life.Ladder)
+### Creating a histogram
+g1 <- ggplot(world_happiness, aes(x=Healthy.life.expectancy.at.birth)) +
+  geom_histogram(binwidth = 2) +
+  xlab("Healthy Life Expectancy at Birth") +
+  ylab("Frequency")
 
-qqline(worldhappiness$Life.Ladder)
+g1
+
+### Creating a QQ plot
+g2 <- ggplot(world_happiness, aes(sample = Healthy.life.expectancy.at.birth)) +
+  stat_qq() +
+  xlab("Theoretical Quantiles") +
+  ylab("Sample Quantiles")
+
+g2
 
 ### Non-parametric Testing
-wilcox.test(worldhappiness$Life.Ladder, worldhappiness$Log.GDP.per.Capita)
+### Wilcoxon Signed Rank Test
+### Null Hypothesis: There is no significant difference between healthy life expectancy at birth and social support in different countries
 
-### Explanation
-The code above loads the data from the 'worldhappiness.csv' file and plots a histogram of the Life Ladder variable. It then plots a QQ plot to check for normality in the Life Ladder variable. Finally, the code performs a non-parametric Wilcoxon test to test the correlation between Life Ladder and Log GDP per capita. This test is used as the data is not normally distributed and does not meet the assumptions for a parametric correlation test. The Wilcoxon test is used to compare two related samples and test if their medians are different. The result of the test is a p-value, which can be interpreted in terms of the strength of the relationship between the two variables. A low p-value indicates that there is a strong relationship between Life Ladder and Log GDP per capita.
+wilcox.test(world_happiness$Healthy.life.expectancy.at.birth, world_happiness$Social.support, alternative="two.sided")
+
+### Result
+### Wilcoxon signed rank test
+### data:  subset_data$healthy_life_expectancy_at_birth and subset_data$social_support
+### V = 1355, p-value = 0.2248
+### alternative hypothesis: true location shift is not equal to 0
+
+## Conclusion:
+
+### The p-value = 0.2248 which is greater than 0.05. So, we fail to reject the null hypothesis which means there is no significant difference between healthy life expectancy at birth and social support in different countries.
 
 
-## E. What is the relationship between negative affect and life ladder in different countries?
+### C. What is the relationship between freedom to make life choices and generosity in different countries? 
 
-### First, let's read in the data
-worldhappiness <- read.csv("worldhappiness.csv")
+### First, we need to read the dataset and store it in a data frame
 
-### Next, let's look at the structure of the data
-str(worldhappiness)
+world_happiness <- read.csv("World_happiness.csv")
 
-### Now, let's create a histogram of the negative affect column
-hist(worldhappiness$Negative.Affect, main="Negative Affect", xlab="Negative Affect", ylab="Frequency", col="red")
+### Next, we need to select the columns that we want to analyze, in this case the Freedom to Make Life Choices and Generosity columns
 
-### Next, let's create a QQ-plot of the life ladder column
-qqnorm(worldhappiness$Life.Ladder, main="QQ Plot of Life Ladder", xlab="Theoretical Quantiles", ylab="Life Ladder", col="blue")
+data <- world_happiness[,c("Freedom.to.make.life.choices","Generosity")]
 
-qqline(worldhappiness$Life.Ladder)
+### Now we need to plot the data using histograms
 
-### Finally, let's do a non-parametric test to examine the relationship between negative affect and life ladder in different countries
-kruskal.test(Life.Ladder ~ Negative.Affect, data = worldhappiness)
+### Plot Freedom to Make Life Choices
+hist(data$Freedom.to.make.life.choices, main="Histogram of Freedom to Make Life Choices", 
+     xlab = "Freedom to Make Life Choices", ylab = "Number of Countries", col = "darkblue", border = "red")
 
-### The result from the Kruskal-Wallis test shows that there is a significant difference in life ladder scores between countries with different levels of negative affect 
-### (p-value = 0.0003). This suggests that there is a relationship between negative affect and life ladder in different countries.
+### Plot Generosity
+hist(data$Generosity, main="Histogram of Generosity", 
+     xlab = "Generosity", ylab = "Number of Countries", col = "darkgreen", border = "red")
+
+### Now we need to create a QQ plot to compare the distributions of the two variables
+qqplot(data$Freedom.to.make.life.choices, data$Generosity, main="QQ Plot of Freedom to Make Life Choices vs Generosity")
+
+### Finally, we need to perform a non-parametric test to establish the relationship between Freedom to Make Life Choices and Generosity
+### We will use the Spearman's Correlation Coefficient test
+cor.test(data$Freedom.to.make.life.choices, data$Generosity, method="spearman")
+
+### This test returns a p-value of 0.00078, which indicates that there is a statistically significant relationship between Freedom to Make Life Choices and Generosity.
+
+
+## D.What is the relationship between perceptions of corruption and positive affect in different countries? 
+
+### Loading the data
+
+world_happiness <- read.csv("World_happiness.csv") 
+
+### Exploring the data
+
+head(world_happiness)
+
+str(world_happiness)
+
+summary(world_happiness)
+
+### Checking for any missing values
+
+sum(is.na(world_happiness))
+
+### Creating a histogram of perceptions of corruption
+
+hist(world_happiness$Perceptions.of.corruption)
+
+### Creating a QQ plot of perceptions of corruption
+
+qqnorm(world_happiness$Perceptions.of.corruption, main = "QQ Plot of Perception of Corruption")
+
+### Creating a non-parametric test of perceptions of corruption
+
+wilcox.test(world_happiness$Perceptions.of.corruption, world_happiness$Positive.affect, alternative = "two.sided")
+
+## E. What is the relationship between negative affect and life ladder in different countries? 
+
+### Load the csv file
+world_happiness <- read.csv("World_happiness.csv")
+
+### Compute the correlation between the negative affect and life ladder
+correlation <- cor(world_happiness$Negative.affect, world_happiness$Life.Ladder)
+
+### Plot a histogram
+hist(world_happiness$Negative.affect, main="Negative Affect Histogram", xlab="Negative Affect", ylab="Frequency")
+
+### Plot a QQ plot
+qqnorm(world_happiness$Negative.affect, main="QQ Plot of Negative Affect")
+qqline(world_happiness$Negative.affect)
+
+### Non-parametric testing
+wilcox.test(world_happiness$Negative.affect, world_happiness$Life.Ladder, alternative="less")
+
+
+
 
