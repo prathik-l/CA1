@@ -27,6 +27,8 @@ cor(data_subset$Life.Ladder, data_subset$Log.GDP.per.capita)
 ### Plot a histogram
 ggplot(data_subset, aes(x=Life.Ladder)) + 
   geom_histogram(bins = 30, fill = "lightblue") 
+  ![image](https://github.com/prathik-l/CA1/assets/62518218/03c10766-bef9-4e1f-92fe-5347087b4b38)
+
 
 ### Plot a QQplot
 ggplot(data_subset, aes(sample = Life.Ladder)) +
